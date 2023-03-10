@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { SimpleStorageABI } from "./abi/abi";
+import SimpleStorage from "./abi/SimpleStorage.json";
 import Web3 from "web3";
 import './App.css';
 
 // Access our wallet inside of our dapp
 const web3 = new Web3(Web3.givenProvider);
 // Contract address of the deployed smart contract
-const contractAddress = "0xBa9Aa5AFE8925a8De0549302302727e13a781A2f";
+const contractAddress = "0xBfc13f36AEa65dA109B29234991ecf2Eb4eF5B02";//SimpleStorage.networks.contractAddress; //"0xBa9Aa5AFE8925a8De0549302302727e13a781A2f";
 
 const storageContract = new web3.eth.Contract(SimpleStorageABI, contractAddress);
 
