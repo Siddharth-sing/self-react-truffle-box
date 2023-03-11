@@ -1,21 +1,30 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { SimpleStorageABI } from "./abi/abi";
 import SimpleStorage from "./abi/SimpleStorage.json";
 import Web3 from "web3";
 import './App.css';
 
-// Access our wallet inside of our dapp
-const web3 = new Web3(Web3.givenProvider);
-// Contract address of the deployed smart contract
-const contractAddress = "0xBfc13f36AEa65dA109B29234991ecf2Eb4eF5B02";//SimpleStorage.networks.contractAddress; //"0xBa9Aa5AFE8925a8De0549302302727e13a781A2f";
 
-const storageContract = new web3.eth.Contract(SimpleStorageABI, contractAddress);
+const web3 = new Web3(Web3.givenProvider);
+var storageContract;
 
 function App() {
-  // Hold variables that will interact with our contract and frontend
+
+  
+
   const [number, setUint] = useState(0);
   const [getNumber, setGet] = useState("0");
-  
+
+  useEffect(() => {
+    console.log("Inside useEffect");
+    async function fetchData() {
+       var networkId = await web3.eth.net.getId();
+       var contractAddress = SimpleStorage.networks[networkId].address;
+       storageContract = new web3.eth.Contract(SimpleStorageABI,contractAddress);
+    }
+    fetchData();
+  }, []);
+
   const numberSet = async (t) => {
     console.log("Called");
     t.preventDefault();
